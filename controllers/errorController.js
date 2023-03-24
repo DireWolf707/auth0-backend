@@ -21,6 +21,8 @@ const handleInvalidToken = () => new AppError("Invalid token. Please log in agai
 
 const handleUnauthorized = () => new AppError("Authentication Required. Please log in!", 401)
 
+const handleInsufficientScope = () => new AppError("Permission denied!", 403)
+
 const sendErrorDev = (err, req, res) => {
   return res.status(err.statusCode).json({
     status: err.status,
@@ -61,6 +63,7 @@ export default (err, req, res, next) => {
     if (error.name === "ValidationError") error = handleValidationErrorDB(error) // TODO
     if (error.name === "InvalidTokenError") error = handleInvalidToken(error)
     if (error.name === "UnauthorizedError") error = handleUnauthorized(error)
+    if (error.name === "InsufficientScopeError") error = handleInsufficientScope(error)
 
     sendErrorProd(error, req, res)
   }
