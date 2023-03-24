@@ -17,6 +17,10 @@ const handleValidationErrorDB = (err) => {
   return new AppError(message, 400)
 }
 
+const handleInvalidToken = () => new AppError("Invalid token. Please log in again!", 401)
+
+const handleUnauthorized = () => new AppError("Authentication Required. Please log in!", 401)
+
 const sendErrorDev = (err, req, res) => {
   return res.status(err.statusCode).json({
     status: err.status,
@@ -49,12 +53,14 @@ export default (err, req, res, next) => {
   if (process.env.NODE_ENV !== "production") {
     sendErrorDev(err, req, res)
   } else {
-    const error = { ...err }
+    let error = { ...err }
     error.message = err.message
 
     if (error.name === "CastError") error = handleCastErrorDB(error)
     if (error.code === 11000) error = handleDuplicateFieldsDB(error)
     if (error.name === "ValidationError") error = handleValidationErrorDB(error) // TODO
+    if (error.name === "InvalidTokenError") error = handleInvalidToken(error)
+    if (error.name === "UnauthorizedError") error = handleUnauthorized(error)
 
     sendErrorProd(error, req, res)
   }

@@ -6,7 +6,7 @@ import cors from "cors"
 
 import AppError from "./utils/appError.js"
 import globalErrorHandler from "./controllers/errorController.js"
-// import anyRouter from "./routes/anyRoutes"
+import testRouter from "./routes/testRoute.js"
 
 // Express app Init
 const app = express()
@@ -15,7 +15,12 @@ const app = express()
 // app.enable("trust proxy")
 
 // GLOBAL MIDDLEWARES
-app.use(cors()) // TODO
+app.use(
+  cors({
+    origin: process.env.CLIENT_ORIGIN_URL,
+    credentials: true,
+  })
+) // TODO
 app.options("*", cors()) // enable CORS Pre-Flight
 
 // Enable when serving static files
@@ -38,7 +43,7 @@ app.use(express.json({ limit: "10kb" })) // for json data
 app.get("/", (req, res, next) => {
   res.json("OP")
 })
-// app.use("/api/endpoint", anyRouter)
+app.use("/api/test", testRouter)
 
 // 404 Handler
 app.all("*", (req, res, next) => {
