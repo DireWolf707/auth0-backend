@@ -18,7 +18,6 @@ const app = express()
 app.use(
   cors({
     origin: process.env.CLIENT_ORIGIN_URL,
-    credentials: true,
   })
 ) // TODO
 app.options("*", cors()) // enable CORS Pre-Flight
