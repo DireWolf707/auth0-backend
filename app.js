@@ -7,6 +7,7 @@ import cors from "cors"
 import AppError from "./utils/appError.js"
 import globalErrorHandler from "./controllers/errorController.js"
 import testRouter from "./routes/testRoute.js"
+import userRouter from "./routes/userRoute.js"
 
 // Express app Init
 const app = express()
@@ -42,6 +43,7 @@ app.use(express.json({ limit: "10kb" })) // for json data
 app.get("/", (req, res, next) => {
   res.json("OP")
 })
+app.use("/api/user", userRouter)
 app.use("/api/test", testRouter)
 
 // 404 Handler

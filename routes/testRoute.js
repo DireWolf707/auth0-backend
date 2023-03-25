@@ -1,7 +1,7 @@
 import express from "express"
 import { publicMessage, privateMessage, adminMessage, profile } from "../controllers/testController.js"
 import { validateToken, checkPermissions, getUser } from "../middlewares/auth0.js"
-import { AdminPermissions } from "../permissions/auth0.js"
+import { AdminPermissions } from "../auth0-configs/permissions.js"
 
 const router = express.Router()
 // router.route('')

@@ -23,6 +23,8 @@ const handleUnauthorized = () => new AppError("Authentication Required. Please l
 
 const handleInsufficientScope = () => new AppError("Permission denied!", 403)
 
+const handleValidationErrorAuth0 = (err) => new AppError(err.message, 400)
+
 const sendErrorDev = (err, req, res) => {
   return res.status(err.statusCode).json({
     status: err.status,
@@ -58,12 +60,15 @@ export default (err, req, res, next) => {
     let error = { ...err }
     error.message = err.message
 
+    // Mongo
     if (error.name === "CastError") error = handleCastErrorDB(error)
     if (error.code === 11000) error = handleDuplicateFieldsDB(error)
     if (error.name === "ValidationError") error = handleValidationErrorDB(error) // TODO
+    // Auth0
     if (error.name === "InvalidTokenError") error = handleInvalidToken(error)
     if (error.name === "UnauthorizedError") error = handleUnauthorized(error)
     if (error.name === "InsufficientScopeError") error = handleInsufficientScope(error)
+    if (error.name === "Bad Request") error = handleValidationErrorAuth0(error)
 
     sendErrorProd(error, req, res)
   }
