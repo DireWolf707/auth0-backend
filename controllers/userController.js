@@ -20,7 +20,7 @@ export const updateAvatar = catchAsync(async (req, res, next) => {
   if (!req.files.file.mimetype.startsWith("image/")) throw new AppError("ImageError: Please upload a Image file!", 400)
 
   const avatar = await cloudinary.uploader.upload(req.files.file.tempFilePath) // upload on cloudinary
-  await auth0Client.updateUser({ id: req.auth.payload.sub }, { picture: avatar.url }) // update user
+  await auth0Client.updateUser({ id: req.auth.payload.sub }, { picture: avatar.secure_url }) // update user
   const prevAvatarURL = req.auth.payload.picture
   if (isCloudinaryURL(prevAvatarURL)) await cloudinary.uploader.destroy(extractCloudinaryPublicId(prevAvatarURL)) // delete on cloudinary
 
