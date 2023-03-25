@@ -1,8 +1,6 @@
 import { auth, claimCheck, InsufficientScopeError } from "express-oauth2-jwt-bearer"
 import axios from "axios"
 import catchAsync from "../utils/catchAsync.js"
-import dotenv from "dotenv"
-dotenv.config({ path: process.env.NODE_ENV === "production" ? "./.env.prod" : "./.env" })
 
 const AUTH0_DOMAIN = `https://${process.env.AUTH0_DOMAIN}`
 

@@ -1,5 +1,5 @@
 import catchAsync from "../utils/catchAsync.js"
-import auth0Client from "../auth0-configs/client.js"
+import auth0Client from "../configs/auth0/client.js"
 import { v2 as cloudinary } from "cloudinary"
 import AppError from "../utils/appError.js"
 import { extractCloudinaryPublicId, isCloudinaryURL } from "../utils/cloudinary.js"

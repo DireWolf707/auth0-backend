@@ -1,6 +1,5 @@
-// Env var Init
-import dotenv from "dotenv"
-dotenv.config({ path: process.env.NODE_ENV === "production" ? "./.env.prod" : "./.env" })
+import "./configs/dotenv/config.js"
+import "./configs/cloudinary/config.js"
 
 // Global Exception Handler
 process.on("uncaughtException", (err) => {
@@ -11,8 +10,6 @@ process.on("uncaughtException", (err) => {
 
 import app from "./app.js"
 import mongoose from "mongoose"
-import { v2 as cloudinary } from "cloudinary"
-cloudinary.config({ secure: process.env.NODE === "production" })
 
 // Database Init
 mongoose

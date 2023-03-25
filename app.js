@@ -3,7 +3,6 @@ import morgan from "morgan"
 import helmet from "helmet"
 import cors from "cors"
 import fileupload from "express-fileupload"
-// import path from "path"
 
 import AppError from "./utils/appError.js"
 import globalErrorHandler from "./controllers/errorController.js"
@@ -36,6 +35,8 @@ else app.use(morgan("dev"))
 // Body parser
 app.use(express.json({ limit: "10kb" })) // for json data
 // app.use(express.urlencoded({ extended: true, limit: "10kb" })) // for html form data
+
+// File upload
 app.use(
   fileupload({
     useTempFiles: true,
