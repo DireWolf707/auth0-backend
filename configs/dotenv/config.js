@@ -14,6 +14,9 @@ const getDotenvPath = () => {
 
     case "production":
       return "/etc/secrets/.env"
+
+    default:
+      return path.join(dirname, "../../.env")
   }
 }
 
